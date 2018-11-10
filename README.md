@@ -43,3 +43,14 @@ Add the following lines to `./app/.gitignore`
 .idea/
 .vscode/
 ```
+
+# Vue web app
+This template comes with Vue, a lightweight MVC framework, Milligram for CSS, and Firebase
+
+## Direct copy
+Copy the folder
+```shell
+cp -nr ./templates/vue_simple/ app/
+cd vue
+npm i
+```

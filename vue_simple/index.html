@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vue Template</title>
+
+    <!-- For mobile viewers -->
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <!-- Roboto font for Milligram -->
+    <link
+      rel="stylesheet"
+      href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic"
+    />
+    <!-- Normalize CSS for Milligram -->
+    <link
+      rel="stylesheet"
+      href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css"
+    />
+    <!-- Milligram stylesheet -->
+    <link
+      rel="stylesheet"
+      href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css"
+    />
+    <!-- Font awesome -->
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.5.0/js/solid.js"
+      integrity="sha384-Xgf/DMe1667bioB9X1UM5QX+EG6FolMT4K7G+6rqNZBSONbmPh/qZ62nBPfTx+xG"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.5.0/js/fontawesome.js"
+      integrity="sha384-bNOdVeWbABef8Lh4uZ8c3lJXVlHdf8W5hh1OpJ4dGyqIEhMmcnJrosjQ36Kniaqm"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Page styles -->
+    <style>
+      body {
+        margin-top: 30px;
+      }
+      /* Fixes icons within buttons */
+      .button {
+        margin-bottom: 0px;
+      }
+      .remove {
+        color; 
+      }
+      /* More styles here */
+    </style>
+  </head>
+
+  <body>
+    <!-- Main container, all Vue views go here -->
+    <div class="container" id="app">
+      <div class="row">
+        <div class="column">
+          <!-- Form to make a new todo -->
+          <div class="form">
+            <fieldset>
+              <label for="todo">Todo</label>
+              <!-- Bind input to "todo" variable in Vue, add todo on enter, disable when locked -->
+              <input type="text" id="todo" v-model="todo" @keyup.enter="add" :disabled="!unlocked"/>
+
+              <button @click="add">Add</button>
+            </fieldset>
+          </div>
+        </div>
+        <div class="column">
+          <!-- Allows the user to unlock or lock the interface -->
+          <label>Currently: {{unlocked ? 'Unlocked' : 'Locked'}}</label>
+          <button class="button" v-if="unlocked" @click="unlocked = !unlocked">Lock</button>
+          <button class="button button-outline" v-else @click="unlocked = !unlocked">Unlock</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="column">
+          <!-- Display the todo items in a table format -->
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Time</th>
+                <th v-if="unlocked">Remove</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Loop through all todos, displaying each one -->
+              <tr v-for="todo in todos">
+                <td>{{ todo.name | titlecase }}</td>
+                <td>{{ todo.time | displayDate }}</td>
+                <td v-if="unlocked">
+                  <!-- Icon button to remove todo item -->
+                  <button
+                    class="button button-clear remove"
+                    @click="remove(todo.time)"
+                  >
+                    <i class="fas fa-trash fa-2x"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vue library -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-firestore.js"></script>
+    <script>
+      /*
+      firebase.initializeApp({
+        // Replace with your app's initialization code
+      });
+      const db = firebase.firestore();
+      db.settings({
+        timestampsInSnapshots: true
+      });
+      */
+
+      /* Vue instance */
+      const app = new Vue({
+        // element to bind the Vue instance to
+        el: '#app',
+        data: {
+          unlocked: true,
+          // current todo the user is typing in
+          todo: '',
+          // initial todos list
+          todos: [
+            {
+              name: 'Do laundry',
+              time: new Date()
+            },
+            {
+              name: 'Wash plates',
+              time: new Date()
+            }
+          ]
+        },
+        methods: {
+          // add a new todo item
+          add() {
+            // cannot add if locked
+            if (!this.unlocked) {
+              alert('Changes are locked!');
+              return;
+            }
+
+            // trim the name
+            let name = this.todo.trim();
+
+            if (name.length < 1) {
+              alert('Name is required!');
+              return;
+            }
+
+            // add name and a time
+            this.todos.push({
+              name,
+              time: new Date()
+            });
+
+            // reset
+            this.todo = '';
+          },
+          // remove a todo item based on it's time (hopefully unique)
+          remove(removeTime) {
+            // filter out the todo item with the same time as the removeTime
+            this.todos = this.todos.filter(({ time }) => time != removeTime);
+          }
+        },
+        filters: {
+          // convert first letter of each word to upper case
+          titlecase(str) {
+            return str
+              .split(' ')
+              .map(word => word[0].toUpperCase() + word.slice(1))
+              .join(' ');
+          },
+          // display dates in a special format. Ex: Fri, Oct 12, 2018
+          displayDate(date) {
+            return date.toLocaleDateString('en-US', {
+              weekday: 'short',
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric'
+            });
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
