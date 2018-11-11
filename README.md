@@ -12,6 +12,8 @@ cd app
 npm i
 ```
 
+Some VSCode Prettier settings may need to be changed. Change `prettier print width` to 120, `prettier trailing comma` to `es5`, and check `prettier tslint integration`.
+
 ## Create the app manually
 This guide assumes installing to the `./app` directory. If this is not the case, change all `app` to the specified directory
 
