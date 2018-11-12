@@ -1,5 +1,5 @@
-# templates
-Common templates
+# Templates
+Common templates for different frameworks
 
 # Typescript React
 Typescript React starter template comes with React, Typescript, Material UI, React Router, and the autobind decorator (to prevent reduant `this`)
@@ -12,7 +12,7 @@ cd app
 npm i
 ```
 
-Some VSCode Prettier settings may need to be changed. Change `prettier print width` to 120, `prettier trailing comma` to `es5`, and check `prettier tslint integration`.
+Some VSCode Prettier settings may need to be changed. Change `prettier trailing comma` to `es5`, and check `prettier tslint integration`.
 
 ## Create the app manually
 This guide assumes installing to the `./app` directory. If this is not the case, change all `app` to the specified directory
