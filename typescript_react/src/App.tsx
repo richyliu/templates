@@ -30,13 +30,13 @@ class App extends React.Component<any, AppState> {
   constructor(props) {
     super(props);
     this.state = {
-      value: '/home'
+      value: '/home',
     };
   }
 
   public componentDidMount() {
     this.setState({
-      value: this.props.history.location.pathname
+      value: this.props.history.location.pathname,
     });
   }
 
