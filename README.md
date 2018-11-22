@@ -56,3 +56,13 @@ cp -nr ./templates/vue_simple/ app/
 cd vue
 npm i
 ```
+
+# Homebrew React Typescript Boilerplate
+
+## Direct copy
+Copy the folder
+```shell
+cp -nr ./templates/typscript_react/ app/
+cd app
+npm i
+```
