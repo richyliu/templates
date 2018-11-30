@@ -62,7 +62,7 @@ npm i
 ## Direct copy
 Copy the folder
 ```shell
-cp -nr ./templates/typscript_react/ app/
+cp -nr ./templates/homebrew_react/ app/
 cd app
 npm i
 ```
