@@ -25,7 +25,8 @@
         "singleline": "never"
       }
     ],
-    "quotemark": [true, "single", "jsx-double"]
+    "quotemark": [true, "single", "jsx-double"],
+    "curly": [true, "ignore-same-line"]
   },
   "linterOptions": {
     "exclude": [
