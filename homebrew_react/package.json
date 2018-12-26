@@ -29,7 +29,8 @@
     "@types/react": "^16.7.6",
     "@types/react-dom": "^16.0.9",
     "@types/jest": "^23.3.9",
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "fsevents": "^2.0.1"
   },
   "dependencies": {
     "css-loader": "^1.0.1",
